@@ -14,6 +14,9 @@
 		D9E17CC522B8013A00CDA9B2 /* ShapesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E17CC422B8013A00CDA9B2 /* ShapesTests.swift */; };
 		D9E17CED22B8041600CDA9B2 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E17CEC22B8041600CDA9B2 /* Coordinator.swift */; };
 		D9E17CF622B80A3900CDA9B2 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E17CF522B80A3900CDA9B2 /* AppCoordinator.swift */; };
+		D9E17CFA22B80E1F00CDA9B2 /* ShapesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E17CF922B80E1F00CDA9B2 /* ShapesView.swift */; };
+		D9E17CFC22B80EC400CDA9B2 /* CAShapeLayer+Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E17CFB22B80EC400CDA9B2 /* CAShapeLayer+Shapes.swift */; };
+		D9E17D1B22B8193000CDA9B2 /* Collection+SafeSubscripting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E17D1A22B8193000CDA9B2 /* Collection+SafeSubscripting.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +41,9 @@
 		D9E17CC622B8013A00CDA9B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D9E17CEC22B8041600CDA9B2 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		D9E17CF522B80A3900CDA9B2 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		D9E17CF922B80E1F00CDA9B2 /* ShapesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapesView.swift; sourceTree = "<group>"; };
+		D9E17CFB22B80EC400CDA9B2 /* CAShapeLayer+Shapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CAShapeLayer+Shapes.swift"; sourceTree = "<group>"; };
+		D9E17D1A22B8193000CDA9B2 /* Collection+SafeSubscripting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+SafeSubscripting.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +105,7 @@
 		D9E17CEE22B8045900CDA9B2 /* Generic */ = {
 			isa = PBXGroup;
 			children = (
+				D9E17D1822B818F500CDA9B2 /* Common */,
 				D9E17CF222B8097700CDA9B2 /* Coordinator */,
 			);
 			path = Generic;
@@ -142,9 +149,51 @@
 		D9E17CF322B809B800CDA9B2 /* Shapes */ = {
 			isa = PBXGroup;
 			children = (
-				D9E17CB122B8013800CDA9B2 /* ShapesViewController.swift */,
+				D9E17D3722B82F1E00CDA9B2 /* Extensions */,
+				D9E17CF822B80E0D00CDA9B2 /* View */,
+				D9E17CF722B80E0400CDA9B2 /* ViewController */,
 			);
 			path = Shapes;
+			sourceTree = "<group>";
+		};
+		D9E17CF722B80E0400CDA9B2 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D9E17CB122B8013800CDA9B2 /* ShapesViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		D9E17CF822B80E0D00CDA9B2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D9E17CF922B80E1F00CDA9B2 /* ShapesView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D9E17D1822B818F500CDA9B2 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				D9E17D1922B8192400CDA9B2 /* Extensions */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		D9E17D1922B8192400CDA9B2 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D9E17D1A22B8193000CDA9B2 /* Collection+SafeSubscripting.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		D9E17D3722B82F1E00CDA9B2 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D9E17CFB22B80EC400CDA9B2 /* CAShapeLayer+Shapes.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,6 +299,9 @@
 				D9E17CF622B80A3900CDA9B2 /* AppCoordinator.swift in Sources */,
 				D9E17CB222B8013800CDA9B2 /* ShapesViewController.swift in Sources */,
 				D9E17CB022B8013800CDA9B2 /* AppDelegate.swift in Sources */,
+				D9E17D1B22B8193000CDA9B2 /* Collection+SafeSubscripting.swift in Sources */,
+				D9E17CFA22B80E1F00CDA9B2 /* ShapesView.swift in Sources */,
+				D9E17CFC22B80EC400CDA9B2 /* CAShapeLayer+Shapes.swift in Sources */,
 				D9E17CED22B8041600CDA9B2 /* Coordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
