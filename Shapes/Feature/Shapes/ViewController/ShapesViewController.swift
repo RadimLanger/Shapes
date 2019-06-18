@@ -21,5 +21,9 @@ final class ShapesViewController: UIViewController {
 
         rootView.setupShapes()
     }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 }
 

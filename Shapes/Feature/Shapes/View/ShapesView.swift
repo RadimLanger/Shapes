@@ -16,8 +16,9 @@ final class ShapesView: UIView {
         return [circleLayer, triangleLayer, starLayer].compactMap({ $0 })
     }
     
-    private var randomColor: UIColor? {
-        let colors: [UIColor] = [.red, .green, .blue, .orange, .brown, .yellow, .purple]
+    private func randomColor(filter color: UIColor) -> UIColor? { // todo: delete?
+
+        let colors: [UIColor] = [.red, .blue, .orange, .brown, .yellow, .purple].filter({ $0 != color })
         return colors.randomElement()
     }
 
@@ -27,7 +28,8 @@ final class ShapesView: UIView {
 
     convenience init() {
         self.init(frame: .zero)
-        backgroundColor = .white
+
+        backgroundColor = UIColor(named: "Background")
         addSubview(button)
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
@@ -76,45 +78,47 @@ final class ShapesView: UIView {
         triangleLayer = CAShapeLayer.triangle(for: frame)
         starLayer = CAShapeLayer.star(for: frame)
 
-        allShapeViews.forEach({
-            layer.addSublayer($0)
-            $0.fillColor = randomColor?.cgColor
-        })
+        allShapeViews.forEach(layer.addSublayer)
+
+        circleLayer?.fillColor = UIColor.red.cgColor
+        triangleLayer?.fillColor = UIColor.blue.cgColor
+        starLayer?.fillColor = UIColor.orange.cgColor
+
         setNeedsLayout()
     }
 
     @objc func buttonTapped() {
-        animateOpacity()
+        animateSize(for: circleLayer!)
+        animateOpacity(for: triangleLayer!)
+        animateRotation(for: starLayer!)
     }
 
-    func animateRotation() { // todo: transform.scale.x and y animation
-        let shape = allShapeViews[1]
+    func animateRotation(for layer: CAShapeLayer) {
 
-        let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")
-        rotationAnimation.fromValue = 0.0
-        rotationAnimation.toValue = Double.pi * 2
-        rotationAnimation.duration = 1.0
+        let animation = CABasicAnimation(keyPath: "transform.rotation.y")
+        animation.fromValue = 0.0
+        animation.toValue = Double.pi
+        animation.duration = 0.3
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
 
-        shape.add(rotationAnimation, forKey: nil)
+        layer.add(animation, forKey: nil)
     }
 
-    func animateOpacity() {
-        guard let shape = allShapeViews.first else { return }
-        let colorAnimation = CABasicAnimation(keyPath: "opacity")
-        colorAnimation.fromValue = shape.opacity
-        colorAnimation.toValue = [0.1, 0.5, 0.8, 1].randomElement()
-        colorAnimation.fillMode = .forwards
-        colorAnimation.isRemovedOnCompletion = false
-        colorAnimation.duration = CFTimeInterval(integerLiteral: 1)
-        colorAnimation.delegate = self
-        shape.add(colorAnimation, forKey: nil)
+    func animateOpacity(for layer: CAShapeLayer) {
 
+        let animation = CABasicAnimation(keyPath: "opacity")
+        animation.fillMode = .forwards
+        animation.duration = CFTimeInterval(floatLiteral: 0.3)
+        let newLayerOpacity: Float = layer.opacity == 0.1 ? 1 : 0.1
+        animation.fromValue = layer.opacity
+        layer.opacity = newLayerOpacity
+
+        layer.add(animation, forKey: nil)
     }
-}
 
-extension ShapesView: CAAnimationDelegate {
-    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-//        let color = (anim as? CABasicAnimation)?.toValue as! CGColor
-//        allShapeViews.first?.fillColor = color
+    func animateSize(for layer: CAShapeLayer) {
+
+        let newValue: CGFloat = layer.affineTransform().a == 1 ? 0.8 : 1
+        layer.setAffineTransform(CGAffineTransform(scaleX: newValue, y: newValue))
     }
 }
