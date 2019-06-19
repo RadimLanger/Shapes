@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D9053F6122BAB86B005A58BE /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9053F6022BAB86B005A58BE /* Colors.swift */; };
+		D9053F6322BABCBF005A58BE /* UIButton+AddTargetClosure.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9053F6222BABCBF005A58BE /* UIButton+AddTargetClosure.swift */; };
+		D93F464522B984D40009D2EA /* LevitatingMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93F464422B984D40009D2EA /* LevitatingMenuView.swift */; };
 		D9E17CB022B8013800CDA9B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E17CAF22B8013800CDA9B2 /* AppDelegate.swift */; };
 		D9E17CB222B8013800CDA9B2 /* ShapesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E17CB122B8013800CDA9B2 /* ShapesViewController.swift */; };
 		D9E17CB722B8013A00CDA9B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9E17CB622B8013A00CDA9B2 /* Assets.xcassets */; };
@@ -30,6 +33,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D9053F6022BAB86B005A58BE /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		D9053F6222BABCBF005A58BE /* UIButton+AddTargetClosure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+AddTargetClosure.swift"; sourceTree = "<group>"; };
+		D93F464422B984D40009D2EA /* LevitatingMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevitatingMenuView.swift; sourceTree = "<group>"; };
 		D9E17CAC22B8013800CDA9B2 /* Shapes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shapes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9E17CAF22B8013800CDA9B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D9E17CB122B8013800CDA9B2 /* ShapesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapesViewController.swift; sourceTree = "<group>"; };
@@ -64,6 +70,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D93F464122B984A70009D2EA /* LevitatingMenu */ = {
+			isa = PBXGroup;
+			children = (
+				D93F464422B984D40009D2EA /* LevitatingMenuView.swift */,
+			);
+			path = LevitatingMenu;
+			sourceTree = "<group>";
+		};
 		D9E17CA322B8013800CDA9B2 = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +147,7 @@
 		D9E17CF122B8094700CDA9B2 /* Feature */ = {
 			isa = PBXGroup;
 			children = (
+				D93F464122B984A70009D2EA /* LevitatingMenu */,
 				D9E17CF322B809B800CDA9B2 /* Shapes */,
 			);
 			path = Feature;
@@ -176,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				D9E17D1922B8192400CDA9B2 /* Extensions */,
+				D9053F6022BAB86B005A58BE /* Colors.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -184,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				D9E17D1A22B8193000CDA9B2 /* Collection+SafeSubscripting.swift */,
+				D9053F6222BABCBF005A58BE /* UIButton+AddTargetClosure.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -297,11 +314,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9E17CF622B80A3900CDA9B2 /* AppCoordinator.swift in Sources */,
+				D9053F6122BAB86B005A58BE /* Colors.swift in Sources */,
 				D9E17CB222B8013800CDA9B2 /* ShapesViewController.swift in Sources */,
+				D93F464522B984D40009D2EA /* LevitatingMenuView.swift in Sources */,
 				D9E17CB022B8013800CDA9B2 /* AppDelegate.swift in Sources */,
 				D9E17D1B22B8193000CDA9B2 /* Collection+SafeSubscripting.swift in Sources */,
 				D9E17CFA22B80E1F00CDA9B2 /* ShapesView.swift in Sources */,
 				D9E17CFC22B80EC400CDA9B2 /* CAShapeLayer+Shapes.swift in Sources */,
+				D9053F6322BABCBF005A58BE /* UIButton+AddTargetClosure.swift in Sources */,
 				D9E17CED22B8041600CDA9B2 /* Coordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

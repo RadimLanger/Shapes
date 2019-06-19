@@ -20,10 +20,60 @@ final class ShapesViewController: UIViewController {
         super.viewWillAppear(animated)
 
         rootView.setupShapes()
+        rootView.updateLevitatingMenuPosition()
+
+        setupMenuItems()
+        view.setNeedsLayout()
+    }
+
+    private func setupMenuItems() {
+
+        let shapeSize = rootView.shapeSize
+
+        let circleImage = rootView.circleLayer?.render(for: shapeSize)
+        let triangleImage = rootView.triangleLayer?.render(for: shapeSize)
+        let starImage = rootView.starLayer?.render(for: shapeSize)
+
+        let circleButton = UIButton(defaultImage: circleImage)
+        circleButton.addTargetClosure { _ in
+            print("circle tapped")
+        }
+
+        let triangleButton = UIButton(defaultImage: triangleImage)
+        triangleButton.addTargetClosure { _ in
+            print("triangleImage tapped")
+        }
+
+        let starButton = UIButton(defaultImage: starImage)
+        starButton.addTargetClosure { _ in
+            print("starImage tapped")
+        }
+
+        rootView.levitatingMenuView.menuItems = [circleButton, triangleButton, starButton]
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+
 }
 
+private extension CAShapeLayer {
+
+    func render(for size: CGSize) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: size)
+
+        let image = renderer.image { context in
+            return render(in: context.cgContext)
+        }
+
+        return image
+    }
+}
+
+private extension UIButton {
+    convenience init(defaultImage: UIImage?) {
+        self.init()
+        setImage(defaultImage, for: .normal)
+    }
+}

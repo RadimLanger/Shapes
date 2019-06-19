@@ -10,37 +10,35 @@ import UIKit
 
 final class ShapesView: UIView {
 
-    let button = UIButton(type: .infoDark) //todo: delete
-
-    private var allShapeViews: [CAShapeLayer] {
+    var allShapeViews: [CAShapeLayer] {
         return [circleLayer, triangleLayer, starLayer].compactMap({ $0 })
     }
-    
-    private func randomColor(filter color: UIColor) -> UIColor? { // todo: delete?
 
-        let colors: [UIColor] = [.red, .blue, .orange, .brown, .yellow, .purple].filter({ $0 != color })
-        return colors.randomElement()
-    }
+    let levitatingMenuView = LevitatingMenuView()
 
     private(set) var circleLayer: CAShapeLayer?
     private(set) var triangleLayer: CAShapeLayer?
     private(set) var starLayer: CAShapeLayer?
 
-    convenience init() {
-        self.init(frame: .zero)
+    init() {
+        super.init(frame: .zero)
+        backgroundColor = Color.background.value
 
-        backgroundColor = UIColor(named: "Background")
-        addSubview(button)
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        addSubview(levitatingMenuView)
     }
-
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private let topBottomPadding: CGFloat = 16
     private let shapesVerticalPadding: CGFloat = 8
     private let shapesCount: CGFloat = 3
     private var spacingBetweenShapesPlusTopAndBottom: CGFloat {
         return (2 * topBottomPadding) + (shapesVerticalPadding * (shapesCount - 1))
     }
-    private var shapeSize: CGSize {
+
+    var shapeSize: CGSize {
         let size = (frame.size.height - spacingBetweenShapesPlusTopAndBottom) / shapesCount
         return CGSize(width: size, height: size)
     }
@@ -66,8 +64,6 @@ final class ShapesView: UIView {
             shapeView.frame.origin.x = center.x - shapeSize.width / 2
             shapeView.frame.origin.y = yPosition
         })
-
-        button.frame = CGRect(x: 15, y: 50, width: 50, height: 50)
     }
 
     func setupShapes() {
@@ -78,13 +74,11 @@ final class ShapesView: UIView {
         triangleLayer = CAShapeLayer.triangle(for: frame)
         starLayer = CAShapeLayer.star(for: frame)
 
-        allShapeViews.forEach(layer.addSublayer)
+        allShapeViews.forEach({ layer.insertSublayer($0, at: 0) })
 
         circleLayer?.fillColor = UIColor.red.cgColor
         triangleLayer?.fillColor = UIColor.blue.cgColor
         starLayer?.fillColor = UIColor.orange.cgColor
-
-        setNeedsLayout()
     }
 
     @objc func buttonTapped() {
@@ -92,6 +86,12 @@ final class ShapesView: UIView {
         animateOpacity(for: triangleLayer!)
         animateRotation(for: starLayer!)
     }
+
+    func updateLevitatingMenuPosition() {
+        levitatingMenuView.frame.origin = CGPoint(x: center.x + 70, y: center.y - 10)
+    }
+
+    // MARK: - Animations
 
     func animateRotation(for layer: CAShapeLayer) {
 
