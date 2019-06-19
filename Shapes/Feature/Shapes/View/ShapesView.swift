@@ -91,14 +91,56 @@ final class ShapesView: UIView {
         levitatingMenuView.frame.origin = CGPoint(x: center.x + 70, y: center.y - 10)
     }
 
+    func interact(with fingerPosition: CGPoint) {
+        guard levitatingMenuView.frame.contains(fingerPosition) else { return }
+        levitatingMenuView.center = fingerPosition
+    }
+
+    func finishDraggingLevitatingButton(for quadrant: ShapesViewController.Quadrant) {
+
+        let halfExpandedButtonSize = LevitatingMenuView.expandedSize.width / 2
+        let padding: CGFloat = 8
+
+        let finalPoint: CGPoint
+
+        let bottomLeftAnchorPoint = CGPoint(
+            x: padding + halfExpandedButtonSize,
+            y: frame.maxY - halfExpandedButtonSize - padding
+        )
+        let bottomRightAnchorPoint = CGPoint(
+            x: frame.maxX - halfExpandedButtonSize - padding,
+            y: frame.maxY - halfExpandedButtonSize - padding
+        )
+        let topRightAnchorPoint = CGPoint(
+            x: frame.maxX - halfExpandedButtonSize - padding,
+            y: padding + halfExpandedButtonSize
+        )
+
+        switch quadrant {
+            case .topLeft, .topRight: finalPoint = topRightAnchorPoint
+            case .bottomLeft:         finalPoint = bottomLeftAnchorPoint
+            case .bottomRight:        finalPoint = bottomRightAnchorPoint
+        }
+
+        UIView.animate(
+            withDuration: 0.4,
+            delay: 0,
+            usingSpringWithDamping: 0.6,
+            initialSpringVelocity: 1,
+            options: [.curveEaseInOut],
+            animations: { self.levitatingMenuView.center = finalPoint },
+            completion: nil
+        )
+    }
+
     // MARK: - Animations
 
     func animateRotation(for layer: CAShapeLayer) {
 
         let animation = CABasicAnimation(keyPath: "transform.rotation.y")
         animation.fromValue = 0.0
-        animation.toValue = Double.pi
-        animation.duration = 0.3
+        animation.toValue = Double.pi * 2
+        animation.duration = 0.5
         animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
 
         layer.add(animation, forKey: nil)
