@@ -32,13 +32,13 @@ final class LevitatingMenuView: UIView {
                 button.removeFromSuperview()
             }
             menuItems.forEach(addSubview)
-            setupMenuItemsLayout(with: lastState)
+            setupMenuItemsLayout(for: lastState)
         }
     }
 
-    private let menuButton = UIButton(type: .infoLight)
-
     private var lastState = MenuState.identity
+
+    private let menuButton = UIButton()
 
     convenience init() {
         self.init(frame: .zero)
@@ -48,10 +48,12 @@ final class LevitatingMenuView: UIView {
 
         layer.cornerRadius = LevitatingMenuView.preferredSize.width / 2
 
+        updateButtonTitle(for: lastState)
+
         menuButton.addTargetClosure { [weak self] _ in
-            let opposite: LevitatingMenuView.MenuState = self?.lastState == .expanded ? .identity : .expanded
-            self?.lastState = opposite
-            self?.setMenu(to: opposite)
+            let newState: LevitatingMenuView.MenuState = self?.lastState == .expanded ? .identity : .expanded
+            self?.lastState = newState
+            self?.setMenu(to: newState)
         }
     }
 
@@ -69,7 +71,12 @@ final class LevitatingMenuView: UIView {
         menuButton.frame.origin.y = frame.height / 2 - buttonSize / 2
     }
 
-    private func setupMenuItemsLayout(with state: MenuState) {
+    private func updateButtonTitle(for state: MenuState) {
+        let title = state == .expanded ? "🔴" : "🔵"
+        menuButton.setTitle(title, for: .normal)
+    }
+
+    private func setupMenuItemsLayout(for state: MenuState) {
         switch state {
             case .identity:
 
@@ -101,7 +108,10 @@ final class LevitatingMenuView: UIView {
     }
 
     func setMenu(to state: MenuState) {
-        UIView.animate(withDuration: 0.2, animations: {
+
+        let duration: TimeInterval = 0.2
+
+        UIView.animate(withDuration: duration, animations: {
 
             let centerDiff = self.centerDifference(for: state)
 
@@ -109,10 +119,11 @@ final class LevitatingMenuView: UIView {
             self.frame.origin.x += centerDiff
             self.frame.origin.y += centerDiff
             self.updateButtonPosition()
-            self.setupMenuItemsLayout(with: state)
+            self.setupMenuItemsLayout(for: state)
+            self.updateButtonTitle(for: state)
         })
 
-        animateChangingCornerRadius(state: state, duration: 0.2)
+        animateChangingCornerRadius(state: state, duration: duration)
     }
 
     private func centerDifference(for state: MenuState) -> CGFloat {

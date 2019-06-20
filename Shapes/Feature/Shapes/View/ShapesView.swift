@@ -20,6 +20,8 @@ final class ShapesView: UIView {
     private(set) var triangleLayer: CAShapeLayer?
     private(set) var starLayer: CAShapeLayer?
 
+    private var levitationInteractionEnabled = false
+
     init() {
         super.init(frame: .zero)
         backgroundColor = Color.background.value
@@ -30,17 +32,17 @@ final class ShapesView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    var shapeSize: CGSize {
+        let size = (frame.size.height - spacingBetweenShapesPlusTopAndBottom) / shapesCount
+        return CGSize(width: size, height: size)
+    }
+
     private let topBottomPadding: CGFloat = 16
     private let shapesVerticalPadding: CGFloat = 8
     private let shapesCount: CGFloat = 3
     private var spacingBetweenShapesPlusTopAndBottom: CGFloat {
         return (2 * topBottomPadding) + (shapesVerticalPadding * (shapesCount - 1))
-    }
-
-    var shapeSize: CGSize {
-        let size = (frame.size.height - spacingBetweenShapesPlusTopAndBottom) / shapesCount
-        return CGSize(width: size, height: size)
     }
 
     override func layoutSubviews() {
@@ -87,16 +89,16 @@ final class ShapesView: UIView {
         animateRotation(for: starLayer!)
     }
 
-    func updateLevitatingMenuPosition() {
-        levitatingMenuView.frame.origin = CGPoint(x: center.x + 70, y: center.y - 10)
-    }
-
     func interact(with fingerPosition: CGPoint) {
-        guard levitatingMenuView.frame.contains(fingerPosition) else { return }
+        guard levitatingMenuView.frame.contains(fingerPosition) || levitationInteractionEnabled else { return }
+        levitationInteractionEnabled = true
+
         levitatingMenuView.center = fingerPosition
     }
 
-    func finishDraggingLevitatingButton(for quadrant: ShapesViewController.Quadrant) {
+    func finishDraggingLevitatingButton(for quadrant: ShapesViewController.Quadrant, animated: Bool = true) {
+
+        levitationInteractionEnabled = false
 
         let halfExpandedButtonSize = LevitatingMenuView.expandedSize.width / 2
         let padding: CGFloat = 8
@@ -122,15 +124,21 @@ final class ShapesView: UIView {
             case .bottomRight:        finalPoint = bottomRightAnchorPoint
         }
 
-        UIView.animate(
-            withDuration: 0.4,
-            delay: 0,
-            usingSpringWithDamping: 0.6,
-            initialSpringVelocity: 1,
-            options: [.curveEaseInOut],
-            animations: { self.levitatingMenuView.center = finalPoint },
-            completion: nil
-        )
+        let animation = { self.levitatingMenuView.center = finalPoint }
+
+        if animated {
+            UIView.animate(
+                withDuration: 0.4,
+                delay: 0,
+                usingSpringWithDamping: 0.6,
+                initialSpringVelocity: 1,
+                options: [.curveEaseInOut],
+                animations: animation,
+                completion: nil
+            )
+        } else {
+            animation()
+        }
     }
 
     // MARK: - Animations

@@ -53,7 +53,7 @@ final class ShapesViewController: UIViewController {
         super.viewWillAppear(animated)
 
         rootView.setupShapes()
-        rootView.updateLevitatingMenuPosition()
+        rootView.finishDraggingLevitatingButton(for: .bottomRight, animated: false)
 
         setupMenuItems()
         view.setNeedsLayout()
