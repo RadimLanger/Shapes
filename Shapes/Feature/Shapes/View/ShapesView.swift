@@ -33,16 +33,19 @@ final class ShapesView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+
+    // MARK: - Layout
+
     var shapeSize: CGSize {
         let size = (frame.size.height - spacingBetweenShapesPlusTopAndBottom) / shapesCount
         return CGSize(width: size, height: size)
     }
 
     private let topBottomPadding: CGFloat = 16
-    private let shapesVerticalPadding: CGFloat = 8
+    private let shapesVerticalPadding: CGFloat = 16
     private let shapesCount: CGFloat = 3
     private var spacingBetweenShapesPlusTopAndBottom: CGFloat {
-        return (2 * topBottomPadding) + (shapesVerticalPadding * (shapesCount - 1))
+        return safeAreaInsets.top + (2 * topBottomPadding) + (shapesVerticalPadding * (shapesCount))
     }
 
     override func layoutSubviews() {
@@ -60,7 +63,7 @@ final class ShapesView: UIView {
             if let lastViewMaxY = allShapeViews[safe: index - 1]?.frame.maxY {
                 yPosition = lastViewMaxY + shapesVerticalPadding
             } else {
-                yPosition = topBottomPadding
+                yPosition = safeAreaInsets.top
             }
 
             shapeView.frame.origin.x = center.x - shapeSize.width / 2
@@ -81,12 +84,6 @@ final class ShapesView: UIView {
         circleLayer?.fillColor = UIColor.red.cgColor
         triangleLayer?.fillColor = UIColor.blue.cgColor
         starLayer?.fillColor = UIColor.orange.cgColor
-    }
-
-    @objc func buttonTapped() {
-        animateSize(for: circleLayer!)
-        animateOpacity(for: triangleLayer!)
-        animateRotation(for: starLayer!)
     }
 
     func interact(with fingerPosition: CGPoint) {
@@ -115,7 +112,7 @@ final class ShapesView: UIView {
         )
         let topRightAnchorPoint = CGPoint(
             x: frame.maxX - halfExpandedButtonSize - padding,
-            y: padding + halfExpandedButtonSize
+            y: padding + halfExpandedButtonSize + safeAreaInsets.top
         )
 
         switch quadrant {

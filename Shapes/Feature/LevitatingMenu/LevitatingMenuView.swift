@@ -113,7 +113,7 @@ final class LevitatingMenuView: UIView {
 
         UIView.animate(withDuration: duration, animations: {
 
-            let centerDiff = self.centerDifference(for: state)
+            let centerDiff = self.centerFrameDifference(for: state)
 
             self.frame.size = state.size
             self.frame.origin.x += centerDiff
@@ -126,7 +126,7 @@ final class LevitatingMenuView: UIView {
         animateChangingCornerRadius(state: state, duration: duration)
     }
 
-    private func centerDifference(for state: MenuState) -> CGFloat {
+    private func centerFrameDifference(for state: MenuState) -> CGFloat {
         let difference = (LevitatingMenuView.expandedSize.width - LevitatingMenuView.preferredSize.width) / 2
 
         switch state {

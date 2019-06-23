@@ -16,7 +16,7 @@ final class ShapesViewController: UIViewController {
         case bottomLeft
         case bottomRight
 
-        public static func translate(isInTopQuadrant: Bool, isInLeftQuadrant: Bool) -> Quadrant {
+        static func translate(isInTopQuadrant: Bool, isInLeftQuadrant: Bool) -> Quadrant {
             switch (isInTopQuadrant, isInLeftQuadrant) {
                 case (true, true):  return .topLeft
                 case (false, true):  return .bottomLeft
@@ -32,7 +32,7 @@ final class ShapesViewController: UIViewController {
 
     private var lastLevitatingButtonQuadrant = Quadrant.bottomRight
 
-    private var animationForLastQuadrant: (CAShapeLayer) -> Void {
+    private var animateShapeForLastQuadrant: (CAShapeLayer) -> Void {
         switch lastLevitatingButtonQuadrant {
             case .topLeft, .topRight: return rootView.animateSize
             case .bottomLeft:         return rootView.animateOpacity
@@ -53,7 +53,7 @@ final class ShapesViewController: UIViewController {
         super.viewWillAppear(animated)
 
         rootView.setupShapes()
-        rootView.finishDraggingLevitatingButton(for: .bottomRight, animated: false)
+        rootView.finishDraggingLevitatingButton(for: lastLevitatingButtonQuadrant, animated: false)
 
         setupMenuItems()
         view.setNeedsLayout()
@@ -70,19 +70,19 @@ final class ShapesViewController: UIViewController {
         let circleButton = UIButton(defaultImage: circleImage)
         circleButton.addTargetClosure { [weak self] _ in
             guard let circleLayer = self?.rootView.circleLayer else { return }
-            self?.animationForLastQuadrant(circleLayer)
+            self?.animateShapeForLastQuadrant(circleLayer)
         }
 
         let triangleButton = UIButton(defaultImage: triangleImage)
         triangleButton.addTargetClosure { [weak self] _ in
             guard let triangleLayer = self?.rootView.triangleLayer else { return }
-            self?.animationForLastQuadrant(triangleLayer)
+            self?.animateShapeForLastQuadrant(triangleLayer)
         }
 
         let starButton = UIButton(defaultImage: starImage)
         starButton.addTargetClosure { [weak self] _ in
             guard let starLayer = self?.rootView.starLayer else { return }
-            self?.animationForLastQuadrant(starLayer)
+            self?.animateShapeForLastQuadrant(starLayer)
         }
 
         rootView.levitatingMenuView.menuItems = [circleButton, triangleButton, starButton]
@@ -98,6 +98,7 @@ final class ShapesViewController: UIViewController {
     
             case .began, .changed:
                 rootView.interact(with: locationInRootView)
+
             case .failed, .ended, .cancelled:
 
                 let isInTopQuadrant = locationInRootView.y < view.center.y

@@ -51,9 +51,9 @@ extension CAShapeLayer {
 
         path.move(to: CGPoint(x: xCenter, y: r * flip + yCenter))
 
-        for i in 1..<Int(polySide) {
-            let x: CGFloat = r * CGFloat( sin(Double(i) * theta) )
-            let y: CGFloat = r * CGFloat( cos(Double(i) * theta) )
+        for index in 1 ..< Int(polySide) {
+            let x: CGFloat = r * CGFloat( sin(Double(index) * theta) )
+            let y: CGFloat = r * CGFloat( cos(Double(index) * theta) )
             path.addLine(to: CGPoint(x: x + xCenter, y: y * flip + yCenter))
         }
 
